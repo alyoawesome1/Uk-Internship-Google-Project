@@ -34,7 +34,7 @@ public class VideoPlaylistStore {
 
 
     public List<VideoPlaylist> getPlaylists() {
-        // List.copyOf() is used to create a defensive, immutable copy of all the playlists.
+
         return List.copyOf(playlists.values());
     }
 }
