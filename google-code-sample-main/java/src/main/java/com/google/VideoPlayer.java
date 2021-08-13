@@ -41,7 +41,7 @@ public class VideoPlayer {
   public void showAllVideos() {
     var videos = videoLibrary.getVideos();
 
-    // Create an indented string containing all videos in the library, this will simplify output.
+    
     var allVideosString =
             videos.stream()
                     .sorted(VIDEO_ORDER)
@@ -84,7 +84,7 @@ public class VideoPlayer {
   }
 
   public void playRandomVideo() {
-    // Create a list of all unflagged videos.
+    
     var videos =
             videoLibrary.getVideos().stream()
                     .filter(video -> !isFlagged(video.getVideoId()))
@@ -93,7 +93,7 @@ public class VideoPlayer {
     if (videos.isEmpty()) {
       System.out.println("No videos available");
     } else {
-      // Choose a random video from the list of unflagged videos.
+     
       var random = ThreadLocalRandom.current();
       var video = videos.get(random.nextInt(videos.size()));
 
@@ -147,7 +147,7 @@ public class VideoPlayer {
             .getPlaylist(playlistName)
             .ifPresentOrElse(
                     playlist -> {
-                      // The playlist exists.
+                      
                       var video = videoLibrary.getVideo(videoId);
 
                       if (video == null) {
@@ -158,19 +158,19 @@ public class VideoPlayer {
                         var flagReason = flaggingStore.getFlagReason(videoId);
 
                         if (flagReason.isEmpty()) {
-                          // The video is not flagged.
+                          
                           playlist.getVideos().add(videoId);
 
                           System.out.printf("Added video to %s: %s%n", playlistName, video.getTitle());
                         } else {
-                          // The video was flagged.
+                         
                           System.out.printf(
                                   "Cannot add video to %s: Video is currently flagged (reason: %s)%n",
                                   playlistName, flagReason.get());
                         }
                       }
                     },
-                    () -> // The playlist does not exist
+                    () -> 
                             System.out.printf("Cannot add video to %s: Playlist does not exist", playlistName));
   }
 
@@ -180,7 +180,7 @@ public class VideoPlayer {
     if (playlists.isEmpty()) {
       System.out.println("No playlists exist yet");
     } else {
-      // Create an indented string containing all playlists for easier output.
+     
       var allPlaylistsString =
               playlists.stream()
                       .map(VideoPlaylist::getPlaylistName)
@@ -196,7 +196,7 @@ public class VideoPlayer {
             .getPlaylist(playlistName)
             .ifPresentOrElse(
                     playlist -> {
-                      // The playlist exists.
+                     
 
                       var videosInPlaylistString =
                               playlist.getVideos().isEmpty()
@@ -208,7 +208,7 @@ public class VideoPlayer {
 
                       System.out.printf("Showing playlist: %s%n%s", playlistName, videosInPlaylistString);
                     },
-                    () -> // The playlist does not exist.
+                    () -> 
                             System.out.printf("Cannot show playlist %s: Playlist does not exist%n", playlistName));
   }
 
@@ -217,7 +217,7 @@ public class VideoPlayer {
             .getPlaylist(playlistName)
             .ifPresentOrElse(
                     playlist -> {
-                      // The playlist exists.
+                      
                       var video = videoLibrary.getVideo(videoId);
 
                       if (video == null) {
@@ -231,7 +231,7 @@ public class VideoPlayer {
                         System.out.printf("Removed video from %s: %s%n", playlistName, video.getTitle());
                       }
                     },
-                    () -> // The playlist does not exist.
+                    () -> 
                             System.out.printf(
                                     "Cannot remove video from %s: Playlist does not exist%n", playlistName));
   }
@@ -241,12 +241,12 @@ public class VideoPlayer {
             .getPlaylist(playlistName)
             .ifPresentOrElse(
                     playlist -> {
-                      // The playlist exists.
+                      
                       playlist.getVideos().clear();
 
                       System.out.printf("Successfully removed all videos from %s%n", playlistName);
                     },
-                    () -> // The playlist does not exist.
+                    () -> 
                             System.out.printf("Cannot clear playlist %s: Playlist does not exist%n", playlistName));
   }
 
@@ -255,12 +255,12 @@ public class VideoPlayer {
             .getPlaylist(playlistName)
             .ifPresentOrElse(
                     playlist -> {
-                      // The playlist exists.
+                      
                       playlistStore.deletePlaylist(playlistName);
 
                       System.out.printf("Deleted playlist: %s%n", playlistName);
                     },
-                    () -> // The playlist does not exist.
+                    () -> 
                             System.out.printf(
                                     "Cannot delete playlist %s: Playlist does not exist%n", playlistName));
   }
@@ -276,7 +276,7 @@ public class VideoPlayer {
   }
 
   private void displaySearchResults(String searchTerm, List<Video> videos) {
-    // Sort all unflagged videos and store them in a list.
+    
     var sortedVideos =
             videos.stream()
                     .filter(video -> flaggingStore.getFlagReason(video.getVideoId()).isEmpty())
@@ -298,18 +298,18 @@ public class VideoPlayer {
 
       var scanner = new Scanner(System.in);
 
-      // Check if the next characters on the input are an integer number.
+      
       if (scanner.hasNextInt()) {
-        // Read the integer and convert it to a list index by subtracting 1.
+       
         int videoNumber = scanner.nextInt() - 1;
 
-        // If the video number is within the range of the list, play the video at that index.
+        
         if (videoNumber >= 0 && videoNumber < sortedVideos.size()) {
           playVideo(sortedVideos.get(videoNumber).getVideoId());
         }
       }
 
-      // Finish reading the rest of the line.
+      
       scanner.nextLine();
     }
   }
